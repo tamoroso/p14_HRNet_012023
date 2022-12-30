@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { State } from '../mock/formData';
+import { CompanyDept, State } from '../mock/formData';
 
 export interface Employee {
    firstname: string;
@@ -10,4 +10,5 @@ export interface Employee {
    city: string;
    state: State;
    zipcode: string;
+   companyDept: CompanyDept;
 }

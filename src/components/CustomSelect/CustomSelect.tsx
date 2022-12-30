@@ -5,9 +5,7 @@ import {
    Select,
    SelectChangeEvent,
 } from '@mui/material';
-import { Dayjs } from 'dayjs';
-import { FormikErrors, FormikProps } from 'formik';
-import { companyDept, State } from '../../mock/formData';
+import { FormikProps } from 'formik';
 import { Employee } from '../../types/Employee';
 
 interface CustomSelectProps

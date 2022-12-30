@@ -60,7 +60,7 @@ export enum State {
    Wyoming = 'WY',
 }
 
-export enum companyDept {
+export enum CompanyDept {
    Sales = 'sales',
    Marketing = 'marketing',
    Engineering = 'engineering',
