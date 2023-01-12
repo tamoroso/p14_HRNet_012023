@@ -1,16 +1,18 @@
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import { GridValueFormatterParams } from '@mui/x-data-grid';
 import { GridColDef } from '@mui/x-data-grid/models';
-import { Dayjs } from 'dayjs';
-import { Layout } from '../../components';
+import dayjs, { Dayjs } from 'dayjs';
+import { ChangeEvent, useMemo, useState } from 'react';
+import { CustomInputBase, Layout } from '../../components';
 import { useAppSelector } from '../../redux/store';
+import { Employee } from '../../types/Employee';
 
 const formatDate = (params: GridValueFormatterParams<Dayjs>) => {
    if (params.value == null) {
       return '';
    }
 
-   return params.value.format('DD/MM/YYYY');
+   return dayjs(params.value).format('DD/MM/YYYY');
 };
 
 const columns: GridColDef[] = [
@@ -64,17 +66,71 @@ const columns: GridColDef[] = [
 ];
 
 function EmployeeList() {
+   const [searchParams, setSearchParams] = useState('');
    const employees = useAppSelector((state) => state?.employeeState.employees);
+   // NOTE: We can only search by name, departement, city, state and zipcode
+   const searchProps: string[] = [
+      'firstname',
+      'lastname',
+      'city',
+      'state',
+      'companyDept',
+      'zipcode',
+   ];
+
+   const filteredEmployees = useMemo(
+      () =>
+         employees.reduce((acc, employee) => {
+            const tokens = searchParams.toLowerCase().trim().split(' ');
+            if (!tokens.length) {
+               acc.push(employee);
+            }
+            if (tokens.length) {
+               const searchableProps: string[] = searchProps.map(
+                  (key) =>
+                     employee[
+                        key as keyof Omit<
+                           Employee,
+                           'birthDate' | 'startDate' | 'id'
+                        >
+                     ]
+               );
+
+               const results =
+                  searchableProps
+                     .map((element) => (element ? element.toLowerCase() : ''))
+                     .filter((element) =>
+                        tokens.some((token) => element.includes(token))
+                     ).length >= tokens.length;
+               if (results) {
+                  acc.push(employee);
+               }
+            }
+
+            return acc;
+         }, [] as Employee[]),
+
+      [employees, searchParams]
+   );
+
    const linkToObject = {
       label: 'Home',
       to: '/',
    };
-
+   const handleChange = (
+      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+   ) => {
+      setSearchParams(e.target.value);
+   };
    return (
       <Layout title='Current Employees' linkTo={linkToObject}>
          {/* TODO: Add Search feature. Rows props will be replaced by the search result */}
+         <CustomInputBase
+            handleChange={handleChange}
+            searchParams={searchParams}
+         />
          <div style={{ height: 300, width: '100%' }}>
-            <DataGrid rows={employees} columns={columns} />
+            <DataGrid rows={filteredEmployees} columns={columns} />
          </div>
       </Layout>
    );

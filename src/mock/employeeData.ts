@@ -2,17 +2,13 @@ import dayjs from 'dayjs';
 import { Employee } from '../types/Employee';
 import { CompanyDept, State } from './formData';
 
-interface MockedEmployee extends Employee {
-   id: number;
-}
-
-const mockedEmployeeData: MockedEmployee[] = [
+const mockedEmployeeData: Employee[] = [
    {
       id: 1,
       firstname: 'Patrick',
       lastname: 'Bidu',
-      birthDate: dayjs(new Date('1995-09-28')),
-      startDate: dayjs(new Date('2021-10-03')),
+      birthDate: dayjs(new Date('1995-09-28')).format(),
+      startDate: dayjs(new Date('2021-10-03')).format(),
       street: '12th North Avenue',
       city: 'San Francisco',
       state: State.Alabama,
@@ -23,8 +19,8 @@ const mockedEmployeeData: MockedEmployee[] = [
       id: 2,
       firstname: 'Joseph',
       lastname: 'Morenne',
-      birthDate: dayjs(new Date('1960-11-11')),
-      startDate: dayjs(new Date('2015-07-01')),
+      birthDate: dayjs(new Date('1960-11-11')).format(),
+      startDate: dayjs(new Date('2015-07-01')).format(),
       street: '1200th South Avenue',
       city: 'New York City',
       state: State.Colorado,
@@ -35,8 +31,8 @@ const mockedEmployeeData: MockedEmployee[] = [
       id: 3,
       firstname: 'Thomas',
       lastname: 'Amoroso',
-      birthDate: dayjs(new Date('1995-09-28')),
-      startDate: dayjs(new Date('2021-10-03')),
+      birthDate: dayjs(new Date('1995-09-28')).format(),
+      startDate: dayjs(new Date('2021-10-03')).format(),
       street: '5000th West Avenue',
       city: 'San Andreas',
       state: State.MarshallIslands,

@@ -1,11 +1,15 @@
 import { Stack, TextField, Button } from '@mui/material';
 import { useFormik } from 'formik';
 import dayjs from 'dayjs';
+import { useDispatch } from 'react-redux';
 import { CustomDatePicker, Layout } from '../../components';
 import { State, CompanyDept } from '../../mock/formData';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import { addEmployee } from '../../redux/features/employeeSlice';
+import { Employee } from '../../types/Employee';
 
 function CreateEmployee() {
+   const dispatch = useDispatch();
    const formik = useFormik({
       initialValues: {
          lastname: '',
@@ -19,7 +23,13 @@ function CreateEmployee() {
          companyDept: '',
       },
       onSubmit: (values) => {
-         console.log(values);
+         const data = {
+            id: new Date().getTime(),
+            ...values,
+            birthDate: values.birthDate.format(),
+            startDate: values.startDate.format(),
+         };
+         dispatch(addEmployee(data as Employee));
       },
    });
 

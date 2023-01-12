@@ -1,11 +1,11 @@
-import { Dayjs } from 'dayjs';
 import { CompanyDept, State } from '../mock/formData';
 
 export interface Employee {
+   id: number;
    firstname: string;
    lastname: string;
-   birthDate: Dayjs;
-   startDate: Dayjs;
+   birthDate: string;
+   startDate: string;
    street: string;
    city: string;
    state: State;
