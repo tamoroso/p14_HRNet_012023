@@ -1,6 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
-import { FormikErrors, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import { Dayjs } from 'dayjs';
 import { Employee } from '../../types/Employee';
 
